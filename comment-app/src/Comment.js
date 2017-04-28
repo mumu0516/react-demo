@@ -33,6 +33,11 @@ class Comment extends Component {
     componentWillMount () {
         this.mrUpdateString()
     }
+    handleDeleteComment () {
+        if (this.props.onDeleteComment) {
+            this.props.onDeleteComment(this.props.index)
+        }
+    }
     mrUpdateString () {
         const comment = this.props.comment
         const duration = (+Date.now() - comment.createdTime) / 1000
@@ -43,6 +48,7 @@ class Comment extends Component {
         })
     }
     render () {
+        const { comment } = this.props
         return (
             <div className='comment'>
                 <div className='comment-user'>
@@ -51,6 +57,11 @@ class Comment extends Component {
                 <p>{this.props.comment.content}</p>
                 <span className='comment-createdtime'>
                     {this.state.timeString}
+                </span>
+                <span 
+                    className='commit-delete'
+                    onClick={this.handleDeleteComment.bind(this)}>
+                    删除
                 </span>
             </div>
         )
