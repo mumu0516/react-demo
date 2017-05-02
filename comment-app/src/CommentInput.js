@@ -54,6 +54,11 @@ class CommentInput extends Component {
     handleUsernameBlur (event) {
         this.mrSaveUsername(event.target.value)
     }
+    handleKeyup (event) {
+        if (event.keyCode === 13) {
+            this.handleSubmit()
+        }
+    }
     mrSaveUsername (username) {
         localStorage.setItem('username', username)
     }
@@ -82,7 +87,8 @@ class CommentInput extends Component {
                         <textarea 
                             value={this.state.content}
                             onChange={this.handleContentChange.bind(this)}
-                            ref={(textarea) => this.textarea = textarea}></textarea>
+                            ref={(textarea) => this.textarea = textarea}
+                            onKeyUp={this.handleKeyup.bind(this)}></textarea>
                     </div>
                 </div> 
                 <div className='comment-field-button'>

@@ -29,9 +29,17 @@ class CommentApp extends Component {
         this.setState({ comments })
         this.mrSaveComments(comments)
     }
+    handleDeleteComment (index) {
+        // console.log(index)
+        const comments = this.state.comments
+        comments.splice(index, 1)
+        this.setState({ comments })
+        this.mrSaveComments(comments)
+    }
     mrLoadComments () {
         let comments = localStorage.getItem('comments')
-        if (comments) {
+        // 一开始没有存储localStorage的时候,获取到的是字符串 'undefined'
+        if (comments !== 'undefined') {
             comments = JSON.parse(comments)
             this.setState({ comments })
         }
@@ -45,7 +53,9 @@ class CommentApp extends Component {
             <div className='wrapper'>
                 <CommentInput 
                     onSubmit={this.handleSubmitComment.bind(this)}/> 
-                <CommentList comments={this.state.comments}/>
+                <CommentList 
+                    comments={this.state.comments}
+                    onDeleteComment={this.handleDeleteComment.bind(this)}/>
             </div>
         )
     }

@@ -28,10 +28,19 @@ class Comment extends Component {
     // isRequired 必须的
     // any 什么类型都可以
     static propTypes = {
-        comment:PropTypes.object.isRequired
+        comment: PropTypes.object.isRequired,
+        onDeleteComment: PropTypes.func,
+        index: PropTypes.number
     }
     componentWillMount () {
         this.mrUpdateString()
+        this.mrTimer = setInterval(
+            this.mrUpdateString.bind(this),
+            5000
+        )
+    }
+    componentWillUnmount () {
+        clearInterval(this.mrTimer)
     }
     handleDeleteComment () {
         if (this.props.onDeleteComment) {
@@ -47,19 +56,30 @@ class Comment extends Component {
             : `${Math.round(Math.max(duration, 1))}秒前`
         })
     }
+    mrGetContent (content) {
+        return content
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/‘/g, '&#039;')
+                .replace(/`([\S\s]+?)`/g, '<code>$1</code>')
+    }
     render () {
         const { comment } = this.props
         return (
             <div className='comment'>
                 <div className='comment-user'>
-                    <span>{this.props.comment.username}</span>：
+                    <span>{comment.username}</span>：
                 </div>
-                <p>{this.props.comment.content}</p>
+                <p dangerouslySetInnerHTML={{
+                    __html: this.mrGetContent(comment.content)
+                }}></p>
                 <span className='comment-createdtime'>
                     {this.state.timeString}
                 </span>
                 <span 
-                    className='commit-delete'
+                    className='comment-delete'
                     onClick={this.handleDeleteComment.bind(this)}>
                     删除
                 </span>
