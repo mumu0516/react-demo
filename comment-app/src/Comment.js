@@ -1,4 +1,4 @@
-import React, {  Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class Comment extends Component {
@@ -36,7 +36,7 @@ class Comment extends Component {
         this.mrUpdateString()
         this.mrTimer = setInterval(
             this.mrUpdateString.bind(this),
-            5000
+            1000
         )
     }
     componentWillUnmount () {
