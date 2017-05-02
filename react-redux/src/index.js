@@ -14,6 +14,12 @@ import { Provider } from './Connect'
  * 既然这样，我们可以尝试着把context和store组合起来，毕竟store的数据不是谁都能修改的，而是约定只能通过dispatch来进行修改，这样的话每个组件即可以去
  * context里边获取store从而获取状态，又不用担心他们乱改数据
  * 
+ * 
+ * 
+ * 只会接受props并且渲染确定结果的组件我们把它叫做Dumb组件，这种组件只关心一件事情---根据props进行渲染
+ * Smart组件专门做数据相关的应用逻辑，和各种数据打交道，和ajax打交道，然后把数据 通过props传递给Dumb组件。它们带领着Dumb组件完成了复杂的应用程序逻辑
+ * Smart组件不需要考虑太多复用性的问题，它们就是用来执行特定应用逻辑的。Smart组件可能组合了Smart组件和Dumb组件。但是Dumb组件尽量不要依赖Smart组件。因为Dumb组件
+ * 目的之一是为了复用。一个Dumb的 子组件应该都是Dumb才对
  */
 function createStore(reducer) {
   let state = null
