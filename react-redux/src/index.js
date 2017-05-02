@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import Header from './Header'
 import Content from './Content'
 import './index.css'
-
+import { Provider } from './Connect'
 /**
  * redux其实并不复杂，他看起来匪夷所思的设定其实都是为了解决特定的问题而存在的
  * 前端中应用的状态存在的问题：一个状态可能被多个组件依赖或者影响，而React.js并没有提供好的解决方案，我们只能把状态提升到依赖或者影响这个状态的所有组件
@@ -42,12 +42,6 @@ const store = createStore(themeReducer)
 
 
 class Index extends Component {
-  static childContextTypes = {
-    store: PropTypes.object
-  }
-  getChildContext () {
-    return { store }
-  }
   render() {
     return (
       <div>
@@ -59,7 +53,9 @@ class Index extends Component {
 }
 
 render(
-  <Index />,
+  <Provider store={store}>
+    <Index />
+  </Provider>,
   document.getElementById('root')
 )
 
